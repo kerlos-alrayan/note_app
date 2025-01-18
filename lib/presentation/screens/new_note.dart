@@ -77,6 +77,7 @@ class NewNote extends StatelessWidget {
 
               ),
             ),
+
           ],
         ),
         ),
