@@ -36,12 +36,36 @@ class _AddNotePageState extends State<AddNotePage> {
         actions: [
           IconButton(
             onPressed: () async {
-              final newNote = Note(
-                title: _titleController.text,
-                content: _contentController.text,
-              );
-              await addNote(newNote); // استدعاء دالة إضافة الملاحظة
-              Navigator.pop(context); // العودة إلى صفحة الملاحظات
+              if (_titleController.text.isEmpty ||
+                  _contentController.text.isEmpty) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Alert'),
+                      content: const Text(
+                         'Please Make sure to fill the title or note area',
+                          style: TextStyle(fontSize: 16)),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pop();
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else {
+                final newNote = Note(
+                  title: _titleController.text,
+                  content: _contentController.text,
+                );
+                await addNote(newNote);
+                Navigator.pop(context);
+              }
             },
             icon: Icon(
               Icons.check,
@@ -56,13 +80,16 @@ class _AddNotePageState extends State<AddNotePage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              const Text('Title',
+              const Text(
+                'Title',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               TextFormField(
                 controller: _titleController,
                 decoration: InputDecoration(
@@ -72,17 +99,21 @@ class _AddNotePageState extends State<AddNotePage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-
                 ),
               ),
-              SizedBox(height: 40,),
-              const Text('Description',
+              SizedBox(
+                height: 40,
+              ),
+              const Text(
+                'Description',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               TextFormField(
                 controller: _contentController,
                 maxLines: 15,
@@ -93,11 +124,13 @@ class _AddNotePageState extends State<AddNotePage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height *0.1,),
-              Text('Have a nice day😘',
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.1,
+              ),
+              Text(
+                'Have a nice day😘',
                 style: TextStyle(
                   color: Colors.teal,
                   fontWeight: FontWeight.bold,

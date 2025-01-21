@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 
-class NewNote extends StatelessWidget {
+class NewNote extends StatefulWidget {
   const NewNote({super.key});
 
+  @override
+  State<NewNote> createState() => _NewNoteState();
+}
+
+class _NewNoteState extends State<NewNote> {
+  final _titleController = TextEditingController();
+  final _contentController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +54,7 @@ class NewNote extends StatelessWidget {
             ),
             SizedBox(height: 20,),
             TextFormField(
+              controller: _titleController,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.grey[300],
@@ -66,6 +74,7 @@ class NewNote extends StatelessWidget {
             ),
             SizedBox(height: 20,),
             TextFormField(
+              controller: _contentController,
               maxLines: 15,
               decoration: InputDecoration(
                 filled: true,
@@ -90,8 +99,7 @@ class NewNote extends StatelessWidget {
         child: FloatingActionButton(
           backgroundColor: Colors.grey,
           onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => NewNote()));
+            Navigator.pop(context);
           },
           child: Icon(
             Icons.edit,

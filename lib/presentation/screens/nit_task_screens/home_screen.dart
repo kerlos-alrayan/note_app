@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list/presentation/screens/new_note.dart';
+import 'package:to_do_list/presentation/screens/nit_task_screens/new_note.dart';
 import 'package:to_do_list/presentation/screens/nit_task_screens/db_helper.dart';
 
 class HomeScreen extends StatefulWidget {
