@@ -36,7 +36,7 @@ class _EditNotePageState extends State<EditNotePage> {
               color: Colors.black,
             )),
         title: Text(
-          'Add Note',
+          'Edit Note',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.black,

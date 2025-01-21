@@ -12,7 +12,7 @@ class NoteListPage extends StatefulWidget {
 
 class _NoteListPageState extends State<NoteListPage> {
   late Future<List<Note>> notesFuture;
-  late List<bool> isFavorite; // ملاحظة مفضلة لكل ملاحظة
+  List<bool> isFavorite = [];
 
   @override
   void initState() {
@@ -74,7 +74,7 @@ class _NoteListPageState extends State<NoteListPage> {
                         });
                       },
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 24, right: 24),
+                        padding: const EdgeInsets.only(top: 16, left: 24, right: 24),
                         child: Container(
                           margin: const EdgeInsets.only(bottom: 20),
                           width: double.infinity,
@@ -97,19 +97,6 @@ class _NoteListPageState extends State<NoteListPage> {
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    isFavorite[index] = !isFavorite[index];
-                                  });
-                                },
-                                icon: Icon(
-                                  isFavorite[index]
-                                      ? Icons.favorite
-                                      : Icons.favorite_border,
-                                  color: Colors.redAccent,
                                 ),
                               ),
                               //SizedBox(width: 10,),

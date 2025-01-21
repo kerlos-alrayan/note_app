@@ -15,7 +15,7 @@ class DatabaseHelper {
   }
 
   Future<Database> _initDB(String filePath) async {
-    final dbPath = await getDatabasesPath();
+    final dbPath = await getDatabasesPath(); // From my Package sqfLite
     final path = join(dbPath, filePath);
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
@@ -31,7 +31,6 @@ class DatabaseHelper {
     )''');
   }
 
-  // دالة لجلب الملاحظات
   Future<List<Note>> getNotes() async {
     final db = await database; // استدعاء قاعدة البيانات
     final result = await db.query('notes'); // جلب جميع الملاحظات من الجدول

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list/presentation/screens/new_note.dart';
+import 'package:to_do_list/presentation/screens/nit_task_screens/db_helper.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,12 +11,25 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<bool> isFavorite = [];
+  List<Map<String ,dynamic>> notes =[];
 
   // @override
   // void initState() {
   //   super.initState();
   //   isFavorite = List<bool>.filled(3, false);
   // }
+
+  @override
+  void initState(){
+    super.initState();
+    fetchNotes();
+  }
+  Future<void> fetchNotes() async{
+    final data = await DBHelper.getDataFromDB();
+    setState(() {
+      notes = data ?? [];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +72,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: 6,
+                itemCount: notes.length,
                 itemBuilder: (context, index) {
                   isFavorite.add(false);
-                  return noteItem(index);
+                  return noteItem(notes[index]);
                 },
               ),
             ],
@@ -88,48 +102,31 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget noteItem(int index) {
-    return Column(
-      children: [
-        Container(
-          margin: const EdgeInsets.only(bottom: 20),
-          width: 300,
-          height: 70,
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.grey),
+  Widget noteItem(Map<String, dynamic> note) {
+    return Card(
+      margin: const EdgeInsets.all(10),
+      child: ListTile(
+        title: Text(
+          note['Title'],
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'Note Title',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    isFavorite[index] = !isFavorite[index];
-                  });
-                },
-                icon: Icon(
-                  isFavorite[index] ? Icons.favorite : Icons.favorite_border,
-                  color: Colors.redAccent,
-                ),
-              ),
-            ],
+        ),
+        subtitle: Text(note['Note']),
+        trailing: IconButton(
+          icon: Icon(
+            note['isFavorite'] == 1 ? Icons.favorite : Icons.favorite_border,
+            color: Colors.redAccent,
           ),
-        )
-      ],
+          onPressed: () async {
+            final newStatus =
+            note['isFavorite'] == 1 ? 0 : 1;
+            await DBHelper.updateFavoriteStatus(note['id'], newStatus);
+            fetchNotes();
+          },
+        ),
+      ),
     );
   }
 }
