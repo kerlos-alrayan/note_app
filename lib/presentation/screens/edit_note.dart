@@ -141,7 +141,7 @@ class _EditNotePageState extends State<EditNotePage> {
               const SizedBox(height: 20),
               TextFormField(
                 controller: _contentController,
-                maxLines: 15,
+                maxLines: 18,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey[300],

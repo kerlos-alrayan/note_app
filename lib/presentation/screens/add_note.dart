@@ -20,7 +20,7 @@ class _AddNotePageState extends State<AddNotePage> {
         backgroundColor: Colors.grey[100],
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context); // الرجوع إلى الشاشة السابقة
+            Navigator.pop(context);
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -39,7 +39,6 @@ class _AddNotePageState extends State<AddNotePage> {
             onPressed: () async {
               if (_titleController.text.trim().isEmpty ||
                   _contentController.text.trim().isEmpty) {
-                // عرض رسالة تحذير في حالة عدم إدخال العنوان أو المحتوى
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -52,7 +51,7 @@ class _AddNotePageState extends State<AddNotePage> {
                       actions: [
                         TextButton(
                           onPressed: () {
-                            Navigator.of(context).pop(); // إغلاق الرسالة
+                            Navigator.of(context).pop();
                           },
                           child: const Text('Cancel'),
                         ),
@@ -113,7 +112,7 @@ class _AddNotePageState extends State<AddNotePage> {
               const SizedBox(height: 20),
               TextFormField(
                 controller: _contentController,
-                maxLines: 15,
+                maxLines: 18,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey[300],
@@ -123,7 +122,7 @@ class _AddNotePageState extends State<AddNotePage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 40), // إضافة مسافة أسفل النص
+              const SizedBox(height: 40),
               const Text(
                 'Have a nice day😘',
                 style: TextStyle(

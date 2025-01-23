@@ -24,7 +24,8 @@ class DatabaseHelper {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = 'TEXT NOT NULL';
     const isFavorite = 'INTEGER DEFAULT 0';
-    const isArchived = 'INTEGER DEFAULT 0'; // إضافة عمود الأرشفة
+    const isArchived = 'INTEGER DEFAULT 0';
+
 
     await db.execute('''CREATE TABLE notes (
       id $idType,

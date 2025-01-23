@@ -86,7 +86,7 @@ class NoteListPageState extends State<NoteListPage> {
             final notes = snapshot.data!;
             isFavorite = List<bool>.generate(
               notes.length,
-                  (index) => notes[index].isFavorite == 1,
+              (index) => notes[index].isFavorite == 1,
             );
 
             return ListView.builder(
@@ -99,9 +99,8 @@ class NoteListPageState extends State<NoteListPage> {
                   child: Dismissible(
                     direction: DismissDirection.endToStart,
                     key: ValueKey(note.id),
-                    onDismissed: (direction) async{
-                      await deleteNote(
-                          note.id as int);
+                    onDismissed: (direction) async {
+                      await deleteNote(note.id as int);
                       _refreshNotes();
                     },
                     background: Container(
@@ -111,7 +110,10 @@ class NoteListPageState extends State<NoteListPage> {
                         border: Border.all(color: Colors.grey),
                       ),
                       alignment: Alignment.centerRight,
-                      child: Icon(Icons.delete, color: Colors.white,),
+                      child: Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                      ),
                     ),
                     child: Container(
                       //margin: const EdgeInsets.only(bottom: 20),
@@ -155,7 +157,7 @@ class NoteListPageState extends State<NoteListPage> {
                               ),
                               Row(
                                 children: [
-                                  // archive button
+                                  //archive button
                                   IconButton(
                                     onPressed: () async {
                                       setState(() {
@@ -174,17 +176,14 @@ class NoteListPageState extends State<NoteListPage> {
                                       color: Colors.grey,
                                     ),
                                   ),
-                                  // favorite button
+                                  //favorite button
                                   IconButton(
                                     onPressed: () {
                                       setState(() {
-                                        isFavorite[index] = !isFavorite[
-                                        index];
-                                        note.isFavorite = isFavorite[index]
-                                            ? 1
-                                            : 0;
-                                        updateNote(
-                                            note);
+                                        isFavorite[index] = !isFavorite[index];
+                                        note.isFavorite =
+                                            isFavorite[index] ? 1 : 0;
+                                        updateNote(note);
                                       });
                                     },
                                     icon: Icon(
@@ -200,13 +199,22 @@ class NoteListPageState extends State<NoteListPage> {
                               ),
                             ],
                           ),
-                          Text(note.content,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  note.content,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                              //
+
+                            ],
                           )
                         ],
                       ),
