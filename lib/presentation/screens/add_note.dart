@@ -19,14 +19,15 @@ class _AddNotePageState extends State<AddNotePage> {
       appBar: AppBar(
         backgroundColor: Colors.grey[100],
         leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-            )),
-        title: Text(
+          onPressed: () {
+            Navigator.pop(context); // الرجوع إلى الشاشة السابقة
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+        ),
+        title: const Text(
           'Add Note',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -36,21 +37,22 @@ class _AddNotePageState extends State<AddNotePage> {
         actions: [
           IconButton(
             onPressed: () async {
-              if (_titleController.text.isEmpty ||
-                  _contentController.text.isEmpty) {
+              if (_titleController.text.trim().isEmpty ||
+                  _contentController.text.trim().isEmpty) {
+                // عرض رسالة تحذير في حالة عدم إدخال العنوان أو المحتوى
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
                       title: const Text('Alert'),
                       content: const Text(
-                         'Please Make sure to fill the title or note area',
-                          style: TextStyle(fontSize: 16)),
+                        'Please make sure to fill the title or note area',
+                        style: TextStyle(fontSize: 16),
+                      ),
                       actions: [
                         TextButton(
                           onPressed: () {
-                            Navigator.of(context)
-                                .pop();
+                            Navigator.of(context).pop(); // إغلاق الرسالة
                           },
                           child: const Text('Cancel'),
                         ),
@@ -60,14 +62,15 @@ class _AddNotePageState extends State<AddNotePage> {
                 );
               } else {
                 final newNote = Note(
-                  title: _titleController.text,
-                  content: _contentController.text,
+                  title: _titleController.text.trim(),
+                  content: _contentController.text.trim(),
+                  isFavorite: 0,
                 );
                 await addNote(newNote);
                 Navigator.pop(context);
               }
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.check,
               color: Colors.teal,
               size: 28,
@@ -87,9 +90,7 @@ class _AddNotePageState extends State<AddNotePage> {
                   fontSize: 20,
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: _titleController,
                 decoration: InputDecoration(
@@ -101,9 +102,7 @@ class _AddNotePageState extends State<AddNotePage> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 40,
-              ),
+              const SizedBox(height: 40),
               const Text(
                 'Description',
                 style: TextStyle(
@@ -111,25 +110,21 @@ class _AddNotePageState extends State<AddNotePage> {
                   fontSize: 20,
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: _contentController,
                 maxLines: 15,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey[300],
-                  hintText: 'Add a new description for note',
+                  hintText: 'Add a new description for the note',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
-              ),
-              Text(
+              const SizedBox(height: 40), // إضافة مسافة أسفل النص
+              const Text(
                 'Have a nice day😘',
                 style: TextStyle(
                   color: Colors.teal,
